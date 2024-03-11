@@ -40,8 +40,8 @@ class _CustomeTextFieldState extends State<CustomeTextField> {
     _controller = TextEditingController();
     _enableObscureText = widget.obscureText;
     if (widget.isSearchBar) {
-      _controller!.text =
-          BlocProvider.of<ProductsCubit>(context).searchBarContent;
+      // _controller!.text =
+      //     BlocProvider.of<ProductsCubit>(context).searchBarContent;
     }
     super.initState();
   }
@@ -91,8 +91,8 @@ class _CustomeTextFieldState extends State<CustomeTextField> {
                           onPressed: () {
                             setState(() {
                               _controller!.clear();
-                              BlocProvider.of<ProductsCubit>(context)
-                                  .searchBarContent = "";
+                              // BlocProvider.of<ProductsCubit>(context)
+                              //     .searchBarContent = "";
                             });
                           },
                         ),

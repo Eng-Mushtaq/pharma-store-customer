@@ -137,7 +137,7 @@ class _ProductsSuccessView extends StatelessWidget {
     required this.products,
   });
 
-  final List<Product> products;
+  final List<ProductModel> products;
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +170,7 @@ class _CategoriesCardsViewState extends State<_CategoriesCardsView> {
   @override
   void initState() {
     // if choosen category is set, make it selected to paint it
-    selectedIndex = BlocProvider.of<ProductsCubit>(context).choosenCategory.id;
+    // selectedIndex = BlocProvider.of<ProductsCubit>(context).choosenCategory.id;
     super.initState();
   }
 
@@ -200,8 +200,8 @@ class _CategoriesCardsViewState extends State<_CategoriesCardsView> {
                     setState(
                       () {
                         selectedIndex = index;
-                        BlocProvider.of<ProductsCubit>(context)
-                            .choosenCategory = categories[selectedIndex];
+                        // BlocProvider.of<ProductsCubit>(context)
+                        //     .choosenCategory = categories[selectedIndex];
                         BlocProvider.of<ProductsCubit>(context).search();
                       },
                     );

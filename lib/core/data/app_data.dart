@@ -3,12 +3,14 @@ import 'package:pharmacy_warehouse_store_mobile/core/assets/app_products_images.
 import 'package:pharmacy_warehouse_store_mobile/src/model/category.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/model/product.dart';
 
+import '../../src/Cubits/Category/category_cubit.dart';
+
 class Products {
   static final _date = DateTime.now().toString();
   // ignore: non_constant_identifier_names
   static Product Amoxil = Product(
     id: 0,
-    category: AppData.categories[1],
+    // category: AppData.categories[1],
     name: "Amoxil".tr,
     scientificName: "Amoxicillin".tr,
     brand: "GlaxoSmithKline".tr,
@@ -22,7 +24,7 @@ class Products {
   // ignore: non_constant_identifier_names
   static Product Excedrin = Product(
     id: 1,
-    category: AppData.categories[8],
+    // category: AppData.categories[8],
     name: "Excedrin",
     scientificName: "Acetaminophen",
     brand: "GlaxoSmithKline",
@@ -37,7 +39,7 @@ class Products {
   // ignore: non_constant_identifier_names
   static Product Benadryl = Product(
     id: 3,
-    category: AppData.categories[2],
+    // category: AppData.categories[2],
     name: "Benadryl",
     scientificName: "Diphenhydramine",
     brand: "Johnson & Johnson",
@@ -52,7 +54,7 @@ class Products {
   // ignore: non_constant_identifier_names
   static Product PeptoBismol = Product(
     id: 4,
-    category: AppData.categories[7],
+    // category: AppData.categories[7],
     name: "Pepto-Bismol",
     scientificName: "Bismuth subsalicylate",
     brand: "Procter & Gamble",
@@ -67,7 +69,7 @@ class Products {
   // ignore: non_constant_identifier_names
   static Product Robitussin = Product(
     id: 2,
-    category: AppData.categories[4],
+    // category: AppData.categories[4],
     name: "Robitussin",
     scientificName: "Dextromethorphan",
     brand: "Pfizer",
@@ -82,7 +84,7 @@ class Products {
   // ignore: non_constant_identifier_names
   static Product Lipitor = Product(
     id: 5,
-    category: AppData.categories[3],
+    // category: AppData.categories[3],
     name: "Lipitor",
     scientificName: "Atorvastatin",
     brand: "Pfizer",
@@ -97,7 +99,7 @@ class Products {
   // ignore: non_constant_identifier_names
   static Product Lantus = Product(
     id: 6,
-    category: AppData.categories[6],
+    // category: AppData.categories[6],
     name: "Lantus",
     scientificName: "Insulin glargine",
     brand: "Sanofi",
@@ -112,7 +114,7 @@ class Products {
   // ignore: non_constant_identifier_names
   static Product Cortizone = Product(
     id: 7,
-    category: AppData.categories[5],
+    // category: AppData.categories[5],
     name: "Cortizone",
     scientificName: "Hydrocortisone",
     brand: "Bayer",
@@ -127,7 +129,7 @@ class Products {
   // ignore: non_constant_identifier_names
   static Product Centrum = Product(
     id: 8,
-    category: AppData.categories[9],
+    // category: AppData.categories[9],
     name: "Centrum",
     scientificName: "Multivitamins",
     brand: "Pfizer",
@@ -142,7 +144,7 @@ class Products {
   // ignore: non_constant_identifier_names
   static Product OrthoTriCyclen = Product(
     id: 9,
-    category: AppData.categories[10],
+    // category: AppData.categories[10],
     name: "Ortho Tri-Cyclen",
     scientificName: "Ethinyl estradiol",
     brand: "Janssen Pharmaceuticals",

@@ -14,12 +14,13 @@ import 'package:pharmacy_warehouse_store_mobile/src/view/screens/navigation%20ba
 import 'package:pharmacy_warehouse_store_mobile/src/view/widgets/custome_button.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/view/widgets/custome_card.dart';
 
+import '../../Cubits/Products/products_cubit.dart';
 import '../../model/product.dart';
 import '../widgets/custome_icon_button.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   ProductDetailsScreen({super.key});
-  final Product product = Get.arguments;
+  final ProductModel product = Get.arguments;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,13 +105,13 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                   children: [
                     CustomeCard(
-                      title: product.brand,
+                      title: product.description??"",
                       subtitle: "brand".tr,
                       icon: const Icon(Icons.business,
                           color: Colors.teal, size: 30), // Example color
                     ),
                     CustomeCard(
-                      title: product.expirationDate.toString(),
+                      title: product.expDate.toString(),
                       subtitle: "expiration".tr,
                       icon: const Icon(Icons.date_range,
                           color: Colors.red, size: 30), // Example color
@@ -127,7 +128,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           : AppColors.primaryColor, // Example color
                     ),
                     CustomeCard(
-                      title: product.category.name,
+                      title: product.name,
                       subtitle: "category".tr,
                       icon: Icon(
                         Icons.category,
@@ -152,7 +153,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
 class _Buttons extends StatelessWidget {
   const _Buttons({required this.product});
-  final Product product;
+  final ProductModel product;
   @override
   Widget build(BuildContext context) {
     var theme = context.theme;
@@ -218,7 +219,7 @@ class _Buttons extends StatelessWidget {
 
 class _QuantityCounter extends StatefulWidget {
   const _QuantityCounter({required this.product});
-  final Product product;
+  final ProductModel product;
 
   @override
   State<_QuantityCounter> createState() => _QuantityCounterState();
@@ -423,7 +424,7 @@ class _ProductDescription extends StatelessWidget {
     required this.product,
   });
 
-  final Product product;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -431,7 +432,7 @@ class _ProductDescription extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: AutoSizeText(
-        product.description,
+        product.description??"",
         style: theme.textTheme.bodyLarge,
         maxLines: 4,
       ),
@@ -444,7 +445,7 @@ class _ProductPrice extends StatelessWidget {
     required this.product,
   });
 
-  final Product product;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -466,7 +467,7 @@ class _ProductScientificName extends StatelessWidget {
     required this.product,
   });
 
-  final Product product;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -474,7 +475,7 @@ class _ProductScientificName extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: AutoSizeText(
-        product.scientificName,
+        product.name_2??"",
         style: theme.textTheme.displayMedium,
         maxLines: 1,
       ),
@@ -487,7 +488,7 @@ class _ProductName extends StatelessWidget {
     required this.product,
   });
 
-  final Product product;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -506,12 +507,12 @@ class _ProductName extends StatelessWidget {
 class _ProductImage extends StatelessWidget {
   const _ProductImage({required this.product});
 
-  final Product product;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
     return Image.network(
-      product.image,
+      product.image??"",
       width: 250.w,
       height: 250.h,
     );

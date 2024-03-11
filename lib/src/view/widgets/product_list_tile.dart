@@ -6,13 +6,15 @@ import 'package:pharmacy_warehouse_store_mobile/src/model/product.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/view/screens/product_details_screen.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/view/widgets/cart_quantity_counter.dart';
 
+import '../../Cubits/Products/products_cubit.dart';
+
 class ProductListTile extends StatelessWidget {
   const ProductListTile(
       {super.key,
       required this.product,
       this.isCartProduct = false,
       this.quantity = 0});
-  final Product product;
+  final ProductModel product;
   final bool isCartProduct;
   final int quantity;
   @override
@@ -43,7 +45,7 @@ class ProductListTile extends StatelessWidget {
                     height: 100,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(product.image),
+                        image: NetworkImage(product.image??""),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -69,7 +71,7 @@ class ProductListTile extends StatelessWidget {
                   SizedBox(
                     width: 130,
                     child: AutoSizeText(
-                      product.scientificName,
+                      product.name_2??"",
                       style: theme.textTheme.titleMedium!.copyWith(
                         color: Colors.black,
                         fontWeight: FontWeight.normal,
@@ -82,7 +84,7 @@ class ProductListTile extends StatelessWidget {
                   SizedBox(
                     width: 130,
                     child: AutoSizeText(
-                      product.brand,
+                      product.description??"",
                       style: theme.textTheme.titleSmall!.copyWith(
                         color: Colors.grey.shade600,
                         overflow: TextOverflow.ellipsis,

@@ -74,7 +74,7 @@ class _ProductsSuccessView extends StatelessWidget {
     required this.products,
   });
 
-  final List<Product> products;
+  final List<ProductModel> products;
 
   @override
   Widget build(BuildContext context) {

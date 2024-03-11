@@ -7,7 +7,7 @@ final class HomeInitial extends HomeState {}
 final class HomeProductsFetchLoading extends HomeState {}
 
 final class HomeProductsFetchSucess extends HomeState {
-  List<Product> mostPopular, recentlyAdded;
+  List<ProductModel> mostPopular, recentlyAdded;
   HomeProductsFetchSucess(
       {required this.mostPopular, required this.recentlyAdded});
 }

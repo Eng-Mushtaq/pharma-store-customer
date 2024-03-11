@@ -26,11 +26,14 @@ class LoginScreen extends StatelessWidget {
     if (value!.isEmpty) {
       return "fieldIsRequired".tr;
     } else if (value.length >= 2 && value.substring(0, 2) != '09') {
-      return "phoneNumberShouldStart".tr;
+      // return "phoneNumberShouldStart".tr;
+      return null;
     } else if (value.length < 10 || value.length > 10) {
-      return "phoneNumberLength".tr;
+      // return "phoneNumberLength".tr;
+      return null;
     } else if (int.tryParse(value) == null) {
-      return "enterValidNumber".tr;
+      // return "enterValidNumber".tr;
+      return null;
     } else {
       return null;
     }
@@ -40,7 +43,8 @@ class LoginScreen extends StatelessWidget {
     if (value!.isEmpty) {
       return "fieldIsRequired".tr;
     } else if (value.length < 8) {
-      return "passwordShouldBe8".tr;
+      // return "passwordShouldBe8".tr;
+      return null;
     } else {
       return null;
     }

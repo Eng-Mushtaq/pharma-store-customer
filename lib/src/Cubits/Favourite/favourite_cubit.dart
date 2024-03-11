@@ -5,12 +5,14 @@ import 'package:pharmacy_warehouse_store_mobile/src/model/product.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/model/user.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/services/api.dart';
 
+import '../Products/products_cubit.dart';
+
 part 'favourite_state.dart';
 
 class FavouriteCubit extends Cubit<FavouriteState> {
   FavouriteCubit() : super(FavouriteInitial());
 
-  Future<void> toggleFavourate({required Product product}) async {
+  Future<void> toggleFavourate({required ProductModel product}) async {
     try {
       emit(FavourateToggleLoading());
       String endPoint = '';

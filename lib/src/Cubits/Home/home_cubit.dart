@@ -4,6 +4,8 @@ import 'package:pharmacy_warehouse_store_mobile/main.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/model/product.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/model/user.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/services/api.dart';
+
+import '../Products/products_cubit.dart';
 part 'home_state.dart';
 
 class HomeProductsType {
@@ -25,9 +27,9 @@ class HomeCubit extends Cubit<HomeState> {
           body: {},
           token: User.token,
           methodType: MethodType.get);
-      List<Product> mostPopularProducts =
-          Product.fromListJson(mostPopularJsonData);
-
+      // List<Product> mostPopularProducts =
+      //     Product.fromListJson(mostPopularJsonData);
+      var prod= ProductsListModel.fromJson(mostPopularJsonData);
       // Fetch Recently Added Products from API
       Map<String, dynamic> recentlyAddedJsonData = await Api.request(
           url: 'api/medicines/recent10',
@@ -41,8 +43,8 @@ class HomeCubit extends Cubit<HomeState> {
       // List<Product> mostPopularProducts = AppData.products;
       // List<Product> recentlyAddedProducts = AppData.products;
       emit(HomeProductsFetchSucess(
-          mostPopular: mostPopularProducts,
-          recentlyAdded: recentlyAddedProducts));
+          mostPopular: prod.data,
+          recentlyAdded: prod.data));
     } on DioException catch (exception) {
       logger.e("Home Cubit Fetch Products : \nNetwork Failure");
       emit(HomeNetworkFailure(errorMessage: exception.message.toString()));

@@ -4,9 +4,11 @@ import 'package:get/get.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/Cubits/Cart/cart_cubit.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/model/product.dart';
 
+import '../../Cubits/Products/products_cubit.dart';
+
 class CartQuantityCounter extends StatelessWidget {
   const CartQuantityCounter({super.key, required this.product});
-  final Product product;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class CartQuantityCounter extends StatelessWidget {
               ),
             ),
             Text(
-              product.quantity.toString(),
+              product.qty.toString(),
               style: theme.textTheme.titleLarge!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: theme.primaryColor,

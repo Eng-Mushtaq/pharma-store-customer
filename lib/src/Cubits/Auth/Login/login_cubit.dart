@@ -16,7 +16,7 @@ class LoginCubit extends Cubit<LoginState> {
       dynamic loginData = await Api.request(
         url: 'login',
         body: {
-          'phoneNumber': phoneNumber,
+          'email': phoneNumber,
           'password': password,
         },
         headers: {
@@ -26,6 +26,7 @@ class LoginCubit extends Cubit<LoginState> {
         methodType: MethodType.post,
       );
       dynamic token = loginData['token'];
+      print(loginData);
       User.token = token;
       // await Future.delayed(const Duration(seconds: 2));
       emit(LoginSuccess());
@@ -36,5 +37,82 @@ class LoginCubit extends Cubit<LoginState> {
       logger.e("Login Cubit : \nGeneral Failure + ${e.toString()}");
       emit(LoginFailure(errorMessage: e.toString()));
     }
+  }
+}
+class LoginModel {
+  LoginModel({
+    required this.user,
+    required this.token,
+  });
+  late final UserModel user;
+  late final String token;
+
+  LoginModel.fromJson(Map<String, dynamic> json){
+    user = UserModel.fromJson(json['user']);
+    token = json['token'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['user'] = user.toJson();
+    _data['token'] = token;
+    return _data;
+  }
+}
+
+class UserModel {
+  UserModel({
+    required this.id,
+    required this.name,
+    this.phone,
+    this.address,
+    this.avatar,
+    this.note,
+    this.type,
+    required this.email,
+    this.emailVerifiedAt,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  late final int id;
+  late final String name;
+  late final Null phone;
+  late final Null address;
+  late final Null avatar;
+  late final Null note;
+  late final Null type;
+  late final String email;
+  late final Null emailVerifiedAt;
+  late final String createdAt;
+  late final String updatedAt;
+
+  UserModel.fromJson(Map<String, dynamic> json){
+    id = json['id'];
+    name = json['name'];
+    phone = null;
+    address = null;
+    avatar = null;
+    note = null;
+    type = null;
+    email = json['email'];
+    emailVerifiedAt = null;
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['name'] = name;
+    _data['phone'] = phone;
+    _data['address'] = address;
+    _data['avatar'] = avatar;
+    _data['note'] = note;
+    _data['type'] = type;
+    _data['email'] = email;
+    _data['email_verified_at'] = emailVerifiedAt;
+    _data['created_at'] = createdAt;
+    _data['updated_at'] = updatedAt;
+    return _data;
   }
 }

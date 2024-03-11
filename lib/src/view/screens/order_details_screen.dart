@@ -42,7 +42,7 @@ class OrderDetailsScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is OrderFetchSuccess) {
             Order order = state.order;
-            return _OrderProductsSuccessView(order: order);
+            // return _OrderProductsSuccessView(order: order);
           } else if (state is OrdersFetchLoading) {
             return const Center(
               child: CircularProgressIndicator(
@@ -77,28 +77,28 @@ class OrderDetailsScreen extends StatelessWidget {
   }
 }
 
-class _OrderProductsSuccessView extends StatelessWidget {
-  const _OrderProductsSuccessView({required this.order});
-  final Order order;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8, right: 16, left: 16),
-      child: ListView.builder(
-        itemCount: order.orderedProducts.length,
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        //physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 12.0),
-            child: ProductListTile(
-              product: order.orderedProducts[index].product,
-              quantity: order.orderedProducts[index].orderedQuantity,
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
+// class _OrderProductsSuccessView extends StatelessWidget {
+//   const _OrderProductsSuccessView({required this.order});
+//   final Order order;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.only(top: 8, right: 16, left: 16),
+//       child: ListView.builder(
+//         itemCount: order.orderedProducts.length,
+//         scrollDirection: Axis.vertical,
+//         shrinkWrap: true,
+//         //physics: const NeverScrollableScrollPhysics(),
+//         itemBuilder: (context, index) {
+//           return Padding(
+//             padding: const EdgeInsets.only(bottom: 12.0),
+//             child: ProductListTile(
+//               product: order.orderedProducts[index].product,
+//               quantity: order.orderedProducts[index].orderedQuantity,
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }

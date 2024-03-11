@@ -4,22 +4,24 @@ import 'package:pharmacy_warehouse_store_mobile/src/model/product.dart';
 import 'package:pharmacy_warehouse_store_mobile/main.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/model/user.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/services/api.dart';
+
+import '../Products/products_cubit.dart';
 part 'cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
   CartCubit() : super(CartInitial());
-  List<Product> cartProducts = [];
+  List<ProductModel> cartProducts = [];
   int totalPrice = 0;
 
-  void addToCart({required Product product, required int quantity}) {
+  void addToCart({required ProductModel product, required int quantity}) {
     try {
       emit(CartAddLoading());
       // Product already exist; increase quantity
       for (int i = 0; i < cartProducts.length; i++) {
         if (cartProducts[i].id == product.id) {
-          if (cartProducts[i].quantity + quantity <= cartProducts[i].inStock) {
-            cartProducts[i].quantity += quantity;
-            totalPrice += quantity * product.price;
+          if (cartProducts[i].qty + quantity <= cartProducts[i].qty) {
+            cartProducts[i].qty += quantity;
+            totalPrice += quantity * product.price.toInt();
             emit(CartAddSuccess());
             logger.i("Current cart products :$cartProducts");
           } else {
@@ -29,10 +31,11 @@ class CartCubit extends Cubit<CartState> {
         }
       }
       // Product do not exist: add it to list
-      if (quantity <= product.inStock) {
-        product.quantity = quantity;
+      // if (quantity <= product.inStock) {
+      if (quantity <= product.qty) {
+        product.qty = quantity;
         cartProducts.add(product);
-        totalPrice += product.quantity * product.price;
+        totalPrice +=(product.qty * product.price.toInt());
         emit(CartAddSuccess());
         logger.i("Current cart products :$cartProducts");
       } else {
@@ -44,12 +47,13 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-  void increaseProductAmount({required Product product}) {
+  void increaseProductAmount({required ProductModel product}) {
     for (int i = 0; i < cartProducts.length; i++) {
       if (cartProducts[i].id == product.id) {
-        if (cartProducts[i].quantity + 1 <= cartProducts[i].inStock) {
-          cartProducts[i].quantity++;
-          totalPrice += product.price;
+        // if (cartProducts[i].qty + 1 <= cartProducts[i].inStock) {
+        if (cartProducts[i].qty + 1 <= cartProducts[i].qty) {
+          cartProducts[i].qty++;
+          totalPrice += product.price.toInt();
           emit(CartProductsChange());
           logger.i("Current cart products :$cartProducts");
           return;
@@ -58,15 +62,15 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-  void decreaseProductAmount({required Product product}) {
+  void decreaseProductAmount({required ProductModel product}) {
     for (int i = 0; i < cartProducts.length; i++) {
       if (cartProducts[i].id == product.id) {
-        if (cartProducts[i].quantity > 0) {
-          cartProducts[i].quantity--;
-          if (cartProducts[i].quantity == 0) {
+        if (cartProducts[i].qty > 0) {
+          cartProducts[i].qty--;
+          if (cartProducts[i].qty == 0) {
             cartProducts.removeAt(i);
           }
-          totalPrice -= product.price;
+          totalPrice -= product.price.toInt();
           emit(CartProductsChange());
           logger.i("Current cart products :$cartProducts");
           return;
@@ -79,14 +83,14 @@ class CartCubit extends Cubit<CartState> {
     try {
       emit(CartPurchaseLoading());
       //await Future.delayed(const Duration(seconds: 2));
+///todo to json cart
+//       Api.request(
+//           url: 'api/carts',
+//           body: Product.toJsonCart(cartProducts),
+//           token: User.token,
+//           methodType: MethodType.post);
 
-      Api.request(
-          url: 'api/carts',
-          body: Product.toJsonCart(cartProducts),
-          token: User.token,
-          methodType: MethodType.post);
-
-      logger.i(Product.toJsonCart(cartProducts));
+      // logger.i(Product.toJsonCart(cartProducts));
       totalPrice = 0;
       emit(CartPurchaseSuccess());
       cartProducts.clear();

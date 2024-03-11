@@ -4,10 +4,12 @@ import 'package:get/get.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/model/product.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/view/screens/product_details_screen.dart';
 
+import '../../Cubits/Products/products_cubit.dart';
+
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.product});
 
-  final Product product;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class ProductCard extends StatelessWidget {
               color: Colors.grey.shade300,
               image: DecorationImage(
                 image: NetworkImage(
-                  product.image,
+                  product.image??"",
                 ),
                 fit: BoxFit.fill,
               ),
@@ -65,7 +67,7 @@ class ProductCard extends StatelessWidget {
                     SizedBox(
                       width: 90,
                       child: AutoSizeText(
-                        product.scientificName,
+                        product.name_2??"",
                         style: theme.textTheme.bodyMedium!.copyWith(
                           color: Colors.white,
                           overflow: TextOverflow.ellipsis,

@@ -127,7 +127,7 @@ class _ProductsCardsView extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is HomeProductsFetchSucess) {
-            List<Product> products = [];
+            List<ProductModel> products = [];
             if (homeProductsType == HomeProductsType.mostPopular) {
               products = state.mostPopular;
             } else if (homeProductsType == HomeProductsType.recentlyAdded) {
@@ -163,7 +163,7 @@ class _ProductsCardsViewSuccess extends StatelessWidget {
     required this.products,
   });
 
-  final List<Product> products;
+  final List<ProductModel> products;
 
   @override
   Widget build(BuildContext context) {
@@ -238,8 +238,8 @@ class _CategoriesCardsViewSuccess extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             BlocProvider.of<BottomNavBarCubit>(context).navigate(index: 1);
-            BlocProvider.of<ProductsCubit>(context).choosenCategory =
-                categories[index];
+            // BlocProvider.of<ProductsCubit>(context).choosenCategory =
+            //     categories[index];
           },
           child: Container(
             margin: const EdgeInsets.only(right: 8),

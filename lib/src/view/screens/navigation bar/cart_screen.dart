@@ -11,6 +11,8 @@ import 'package:pharmacy_warehouse_store_mobile/src/view/widgets/custome_button.
 import 'package:pharmacy_warehouse_store_mobile/src/view/widgets/product_list_tile.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/view/widgets/show_image.dart';
 
+import '../../../Cubits/Products/products_cubit.dart';
+
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
@@ -57,7 +59,7 @@ class _CartProductsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CartCubit, CartState>(
       builder: (context, state) {
-        List<Product> products =
+        List<ProductModel> products =
             BlocProvider.of<CartCubit>(context).cartProducts;
         return Padding(
           padding: const EdgeInsets.only(top: 8, right: 16, left: 16),

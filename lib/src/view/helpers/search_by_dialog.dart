@@ -69,8 +69,8 @@ Widget buildLanguageRadio(String constraints, String label) {
     value: isSelected,
     groupValue: true,
     onChanged: (value) {
-      BlocProvider.of<ProductsCubit>(Get.context!).searchByConstraints =
-          constraints;
+      // BlocProvider.of<ProductsCubit>(Get.context!).searchByConstraints =
+      //     constraints;
       Get.back();
     },
     fillColor: MaterialStateProperty.all(Colors.lightBlueAccent),

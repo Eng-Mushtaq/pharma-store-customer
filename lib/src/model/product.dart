@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:pharmacy_warehouse_store_mobile/src/model/category.dart';
+// import 'package:pharmacy_warehouse_store_mobile/src/model/category.dart';
 
 abstract class ProductType {
   const ProductType._();
@@ -39,7 +39,7 @@ abstract class ProductType {
 
 class Product {
   int id;
-  Category category;
+  // Category category;
   String name;
   String scientificName;
   String brand;
@@ -53,7 +53,7 @@ class Product {
 
   Product({
     required this.id,
-    required this.category,
+    // required this.category,
     required this.name,
     required this.scientificName,
     required this.brand,
@@ -68,7 +68,7 @@ class Product {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'category': [category.toJson()],
+      // 'category': [category.toJson()],
       'name': name,
       'scientificName': scientificName,
       'brand': brand,
@@ -84,7 +84,7 @@ class Product {
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'] as int,
-      category: Category.fromJson(json['category']),
+      // category: Category.fromJson(json['category']),
       name: json['name'] as String,
       scientificName: json['scientificName'] as String,
       brand: json['brand'] as String,
@@ -119,7 +119,6 @@ class Product {
     return '''
     Product {
       id: $id,
-      category: $category,
       name: $name,
       scientificName: $scientificName,
       brand: $brand,

@@ -112,7 +112,7 @@ class _HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.white,
       title: const Text(
-        'MedHub',
+        'YourPharma',
         style: TextStyle(
           color: AppColors.primaryColor,
           fontWeight: FontWeight.bold,

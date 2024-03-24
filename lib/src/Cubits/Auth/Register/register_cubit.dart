@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pharmacy_warehouse_store_mobile/main.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/model/user.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/services/api.dart';
@@ -11,7 +12,7 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   void registerWithPhoneNumber(
       {required String userName,
-      required String pharmacyName,
+      required String email,
       required String phoneNumber,
       required String password}) async {
     try {
@@ -20,9 +21,10 @@ class RegisterCubit extends Cubit<RegisterState> {
         url: 'register',
         body: {
           'name': userName,
-          'pharmacyName': pharmacyName,
-          'phoneNumber': phoneNumber,
+          'email': email,
+          'phone': phoneNumber,
           'password': password,
+          'password_confirmation': password,
         },
         headers: {
           'FCMToken': User.fCMToken ?? "",
@@ -33,7 +35,10 @@ class RegisterCubit extends Cubit<RegisterState> {
 
       dynamic token = registerData['token'];
       User.token = token;
+      print(registerData.toString());
       //await Future.delayed(const Duration(seconds: 2));
+      await GetStorage().write('token', token.toString());
+
       emit(RegisterSuccess());
     } on DioException catch (exception) {
       logger.e("Register Cubit : \nNetwork Failure + ${exception.toString()}");

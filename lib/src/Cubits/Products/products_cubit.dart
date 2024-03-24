@@ -47,13 +47,12 @@ class ProductsCubit extends Cubit<ProductsState> {
 
       // Fetch Searched Products from API
       Map<String, dynamic> productsJsonData = await Api.request(
-          url:
-          'products',
+          url: 'products',
           body: null,
           token: User.token,
           methodType: MethodType.get) as Map<String, dynamic>;
       // List<Product> products = Product.fromListJson(productsJsonData);
-     var pro= ProductsListModel.fromJson(productsJsonData);
+      var pro = ProductsListModel.fromJson(productsJsonData);
       // await Future.delayed(const Duration(seconds: 2));
       // List<Product> products = AppData.filteredProducts[choosenCategory.id];
       if (pro.data.isEmpty) {
@@ -82,7 +81,7 @@ class ProductsCubit extends Cubit<ProductsState> {
           token: User.token,
           methodType: MethodType.get) as Map<String, dynamic>;
       // List<Product> favouriteProducts = Product.fromListJson(favouriteJsonData);
-      var prod= ProductsListModel.fromJson(favouriteJsonData);
+      var prod = ProductsListModel.fromJson(favouriteJsonData);
       // await Future.delayed(const Duration(seconds: 2));
       // List<Product> favouriteProducts = AppData.products;
       if (prod.data.isEmpty) {
@@ -100,19 +99,21 @@ class ProductsCubit extends Cubit<ProductsState> {
     }
   }
 }
+
 class ProductsListModel {
   ProductsListModel({
     required this.data,
   });
   late final List<ProductModel> data;
 
-  ProductsListModel.fromJson(Map<String, dynamic> json){
-    data = List.from(json['data']).map((e)=>ProductModel.fromJson(e)).toList();
+  ProductsListModel.fromJson(Map<String, dynamic> json) {
+    data =
+        List.from(json['data']).map((e) => ProductModel.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['data'] = data.map((e)=>e.toJson()).toList();
+    _data['data'] = data.map((e) => e.toJson()).toList();
     return _data;
   }
 }
@@ -138,7 +139,8 @@ class ProductModel {
   late final String? name_2;
   late final String? image;
   late final int? categoryId;
-  late final int qty;
+  late int qty;
+  int countInCart = 0;
   late final String? expDate;
   late final num price;
   late final String? discount;
@@ -149,21 +151,21 @@ class ProductModel {
   late final String? createdAt;
   late final String? updatedAt;
 
-  ProductModel.fromJson(Map<String, dynamic> json){
+  ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     name_2 = null;
     image = null;
     categoryId = json['category_id'];
-    qty = json['qty'];
+    qty = json['qty'] ?? 0;
     expDate = null;
-    price =num.parse( json['price']);
+    price = num.parse(json['price']);
     discount = json['discount'];
     description = json['description'];
     deletedAt = null;
-    inStock = json['in_stock']??0;
-    isFavorite = json['is_favorite']??false;
-    updatedAt = json['updated_at']??"";
+    inStock = json['qty'] ?? 0;
+    isFavorite = json['is_favorite'] ?? false;
+    updatedAt = json['updated_at'] ?? "";
     // updatedAt = json['updated_at']??"";
   }
 

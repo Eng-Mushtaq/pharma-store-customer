@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pharmacy_warehouse_store_mobile/core/constants/app_colors.dart';
@@ -43,12 +44,18 @@ class ProductListTile extends StatelessWidget {
                   child: Container(
                     width: 100,
                     height: 100,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(product.image??""),
-                        fit: BoxFit.cover,
-                      ),
+                    child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      imageUrl: product.image.toString(),
+                      errorWidget: (context, url, error) =>
+                          Image.asset('assets/products/Excedrin.png'),
                     ),
+                    // decoration: BoxDecoration(
+                    //   image: DecorationImage(
+                    //     image: NetworkImage(product.image ?? ""),
+                    //     fit: BoxFit.cover,
+                    //   ),
+                    // ),
                   ),
                 ),
               ),
@@ -71,7 +78,7 @@ class ProductListTile extends StatelessWidget {
                   SizedBox(
                     width: 130,
                     child: AutoSizeText(
-                      product.name_2??"",
+                      product.name_2 ?? "",
                       style: theme.textTheme.titleMedium!.copyWith(
                         color: Colors.black,
                         fontWeight: FontWeight.normal,
@@ -84,7 +91,7 @@ class ProductListTile extends StatelessWidget {
                   SizedBox(
                     width: 130,
                     child: AutoSizeText(
-                      product.description??"",
+                      product.description ?? "",
                       style: theme.textTheme.titleSmall!.copyWith(
                         color: Colors.grey.shade600,
                         overflow: TextOverflow.ellipsis,

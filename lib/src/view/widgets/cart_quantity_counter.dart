@@ -40,7 +40,7 @@ class CartQuantityCounter extends StatelessWidget {
               ),
             ),
             Text(
-              product.qty.toString(),
+              product.countInCart.toString(),
               style: theme.textTheme.titleLarge!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: theme.primaryColor,

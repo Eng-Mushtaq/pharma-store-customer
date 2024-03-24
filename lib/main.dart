@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' as get_lib;
+import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 import 'package:pharmacy_warehouse_store_mobile/core/constants/app_general_constants.dart';
@@ -33,7 +34,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseApi().initNotifications();
-
+  await GetStorage.init();
   get_lib.Get.put(AppLocalController());
   Bloc.observer = SimpleBlocObserver();
 

@@ -23,28 +23,28 @@ class HomeCubit extends Cubit<HomeState> {
 
       // Fetch Most Popular Products from API
       dynamic mostPopularJsonData = await Api.request(
-          url: 'api/medicines/top10',
+          url: 'products/last',
           body: {},
           token: User.token,
           methodType: MethodType.get);
       // List<Product> mostPopularProducts =
       //     Product.fromListJson(mostPopularJsonData);
-      var prod= ProductsListModel.fromJson(mostPopularJsonData);
+      var prod = ProductsListModel.fromJson(mostPopularJsonData);
       // Fetch Recently Added Products from API
       Map<String, dynamic> recentlyAddedJsonData = await Api.request(
-          url: 'api/medicines/recent10',
+          url: 'products/last',
           body: {},
           token: User.token,
           methodType: MethodType.get) as Map<String, dynamic>;
-      List<Product> recentlyAddedProducts =
-          Product.fromListJson(recentlyAddedJsonData);
+      // List<Product> recentlyAddedProducts =
+      //     Product.fromListJson(recentlyAddedJsonData);
+      var recent = ProductsListModel.fromJson(recentlyAddedJsonData);
 
       // await Future.delayed(const Duration(seconds: 2));
       // List<Product> mostPopularProducts = AppData.products;
       // List<Product> recentlyAddedProducts = AppData.products;
       emit(HomeProductsFetchSucess(
-          mostPopular: prod.data,
-          recentlyAdded: prod.data));
+          mostPopular: prod.data, recentlyAdded: recent.data));
     } on DioException catch (exception) {
       logger.e("Home Cubit Fetch Products : \nNetwork Failure");
       emit(HomeNetworkFailure(errorMessage: exception.message.toString()));

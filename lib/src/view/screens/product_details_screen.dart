@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -105,7 +106,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                   children: [
                     CustomeCard(
-                      title: product.description??"",
+                      title: product.description ?? "",
                       subtitle: "brand".tr,
                       icon: const Icon(Icons.business,
                           color: Colors.teal, size: 30), // Example color
@@ -432,7 +433,7 @@ class _ProductDescription extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: AutoSizeText(
-        product.description??"",
+        product.description ?? "",
         style: theme.textTheme.bodyLarge,
         maxLines: 4,
       ),
@@ -475,7 +476,7 @@ class _ProductScientificName extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: AutoSizeText(
-        product.name_2??"",
+        product.name_2 ?? "",
         style: theme.textTheme.displayMedium,
         maxLines: 1,
       ),
@@ -511,11 +512,17 @@ class _ProductImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      product.image??"",
-      width: 250.w,
-      height: 250.h,
+    return CachedNetworkImage(
+      fit: BoxFit.none,
+      imageUrl: product.image.toString(),
+      errorWidget: (context, url, error) =>
+          Image.asset('assets/products/Excedrin.png'),
     );
+    // return Image.network(
+    //   product.image??"",
+    //   width: 250.w,
+    //   height: 250.h,
+    // );
   }
 }
 

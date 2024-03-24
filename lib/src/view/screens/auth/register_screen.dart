@@ -78,7 +78,7 @@ class RegisterScreen extends StatelessWidget {
       if (formKey.currentState!.validate()) {
         BlocProvider.of<RegisterCubit>(context).registerWithPhoneNumber(
             userName: userName!,
-            pharmacyName: pharmacyName!,
+            email: pharmacyName!,
             phoneNumber: phoneNumber!,
             password: password!);
       }
@@ -146,7 +146,7 @@ class RegisterScreen extends StatelessWidget {
                         CustomeTextField(
                           validator: pharmacyNameValidator,
                           obscureText: false,
-                          hintText: "pharmacyName".tr,
+                          hintText: "email".tr,
                           onChanged: (text) {
                             pharmacyName = text;
                             formKey.currentState!.validate();
@@ -221,7 +221,8 @@ class RegisterScreen extends StatelessWidget {
                           title: "signUp".tr,
                           // onTap: registerUser,
                           onTap: () {
-                            Get.off(() => const HomeScreen());
+                            registerUser();
+                            // Get.off(() => const HomeScreen());
                           },
                           height: 70.h,
                           width: 340.w,

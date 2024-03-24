@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/model/product.dart';
@@ -28,12 +29,17 @@ class ProductCard extends StatelessWidget {
               borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(8), topLeft: Radius.circular(8)),
               color: Colors.grey.shade300,
-              image: DecorationImage(
-                image: NetworkImage(
-                  product.image??"",
-                ),
-                fit: BoxFit.fill,
-              ),
+              // image: DecorationImage(
+              //   image: NetworkImage(
+              //     product.image ?? "",
+              //   ),
+              //   fit: BoxFit.fill,
+              // ),
+            ),
+            child: CachedNetworkImage(
+              imageUrl: product.image.toString(),
+              errorWidget: (context, url, error) =>
+                  Image.asset('assets/products/Excedrin.png'),
             ),
           ),
           Container(
@@ -67,7 +73,7 @@ class ProductCard extends StatelessWidget {
                     SizedBox(
                       width: 90,
                       child: AutoSizeText(
-                        product.name_2??"",
+                        product.name_2 ?? "",
                         style: theme.textTheme.bodyMedium!.copyWith(
                           color: Colors.white,
                           overflow: TextOverflow.ellipsis,

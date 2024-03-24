@@ -49,7 +49,9 @@ dependencies:
   lottie: ^2.7.0
   month_year_picker: ^0.3.0+1
   url_launcher:
-
+  cached_network_image: ^3.3.1
+  get_storage:
+  http:
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1

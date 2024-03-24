@@ -19,16 +19,13 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     startTimer();
   }
-
   startTimer() {
-    var duration = const Duration(seconds: 8);
+    var duration = const Duration(seconds: 5);
     return Timer(duration, route);
   }
-
   route() {
     Get.off(() => LoginScreen());
   }
-
   @override
   void didChangeDependencies() {
     for (var image in AppImages.ads) {

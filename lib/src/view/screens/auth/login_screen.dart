@@ -124,7 +124,6 @@ class LoginScreen extends StatelessWidget {
                               color: AppColors.secondaryTextColor,
                               fontWeight: FontWeight.bold),
                         ),
-
                         // user email textfield
                         const SizedBox(
                           height: 25,
@@ -132,15 +131,14 @@ class LoginScreen extends StatelessWidget {
                         CustomeTextField(
                           validator: userNumberValidator,
                           obscureText: false,
-                          hintText: "userNumber".tr,
+                          hintText: "userName".tr,
                           onChanged: (text) {
                             phoneNumber = text;
                             formKey.currentState!.validate();
                           },
-                          keyboardType: TextInputType.phone,
-                          prefixIcon: AppIcons.phone,
+                          keyboardType: TextInputType.emailAddress,
+                          prefixIcon: Icons.email_outlined,
                         ),
-
                         // password textfield
                         const SizedBox(
                           height: 10,
@@ -156,7 +154,6 @@ class LoginScreen extends StatelessWidget {
                           keyboardType: TextInputType.visiblePassword,
                           prefixIcon: AppIcons.password,
                         ),
-
                         // sign in button
                         const SizedBox(
                           height: 20,
@@ -167,7 +164,6 @@ class LoginScreen extends StatelessWidget {
                           height: 70.h,
                           width: 340.w,
                         ),
-
                         // not a member> register now
                         const SizedBox(
                           height: 30,

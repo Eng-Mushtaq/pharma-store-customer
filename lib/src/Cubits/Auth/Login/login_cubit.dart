@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pharmacy_warehouse_store_mobile/main.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/model/user.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/services/api.dart';
@@ -26,6 +27,8 @@ class LoginCubit extends Cubit<LoginState> {
         methodType: MethodType.post,
       );
       dynamic token = loginData['token'];
+
+      await GetStorage().write('token', token.toString());
       print(loginData);
       User.token = token;
       // await Future.delayed(const Duration(seconds: 2));
@@ -39,6 +42,7 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 }
+
 class LoginModel {
   LoginModel({
     required this.user,
@@ -47,7 +51,7 @@ class LoginModel {
   late final UserModel user;
   late final String token;
 
-  LoginModel.fromJson(Map<String, dynamic> json){
+  LoginModel.fromJson(Map<String, dynamic> json) {
     user = UserModel.fromJson(json['user']);
     token = json['token'];
   }
@@ -86,7 +90,7 @@ class UserModel {
   late final String createdAt;
   late final String updatedAt;
 
-  UserModel.fromJson(Map<String, dynamic> json){
+  UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     phone = null;

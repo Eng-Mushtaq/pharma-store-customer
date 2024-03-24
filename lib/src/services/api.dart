@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' as get_lib;
 import 'package:dio/dio.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pharmacy_warehouse_store_mobile/main.dart';
 
 class MethodType {
@@ -16,7 +17,6 @@ class Api {
   const Api._();
   // static const String baseUrl = 'http://192.168.42.2:8000/';
   static const String baseUrl = 'http://192.168.0.17:8000/api/';
-
   static Future<dynamic> request(
       {required String url,
       @required dynamic body,
@@ -24,12 +24,26 @@ class Api {
       required String methodType,
       String? lang,
       Map<String, String> headers = const {}}) async {
+    String token = GetStorage().read('token') ?? "";
+    print('token is ');
+    print(token);
     Map<String, String> requestHeaders = {};
 
+    // headers.addAll(
+    //   {
+    //     "Auth": 'Bearer $token',
+    //   },
+    // );
     requestHeaders.addAll(
-      {'token': token ?? "", 'lang': lang ?? get_lib.Get.locale.toString()},
+      {
+        "Auth": 'Bearer$token',
+        "accept": 'Application/json',
+        'lang': lang ?? get_lib.Get.locale.toString()
+      },
     );
+    print(requestHeaders.entries.toString());
     requestHeaders.addAll(headers);
+    print(requestHeaders.entries.toString());
 
     final dio = Dio();
     try {
@@ -44,6 +58,8 @@ class Api {
       var jsonData = jsonDecode(
         response.toString(),
       );
+      print('responseeeeeeeeeeeeeeeeeeeee');
+      print(response.data);
       return jsonData;
     } on DioException catch (exception) {
       logger.e("API Dio Exception : $exception");

@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart' as http;
 import 'package:pharmacy_warehouse_store_mobile/src/model/product.dart';
 import 'package:pharmacy_warehouse_store_mobile/main.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/model/user.dart';
@@ -13,61 +16,150 @@ class CartCubit extends Cubit<CartState> {
   List<ProductModel> cartProducts = [];
   int totalPrice = 0;
 
-  void addToCart({required ProductModel product, required int quantity}) {
-    try {
-      emit(CartAddLoading());
-      // Product already exist; increase quantity
-      for (int i = 0; i < cartProducts.length; i++) {
-        if (cartProducts[i].id == product.id) {
-          if (cartProducts[i].qty + quantity <= cartProducts[i].qty) {
-            cartProducts[i].qty += quantity;
-            totalPrice += quantity * product.price.toInt();
-            emit(CartAddSuccess());
-            logger.i("Current cart products :$cartProducts");
-          } else {
-            throw Exception();
-          }
-          return;
+  Future<void> addToCart(
+      {required ProductModel product, required int quantity}) async {
+    // try {
+    emit(CartAddLoading());
+    String token = GetStorage().read('token') ?? "";
+    // Product already exist; increase quantity
+    print("token");
+    print(token);
+    print(cartProducts.length);
+    if (cartProducts.where((element) => element.id == product.id).isEmpty) {
+      cartProducts.add(product);
+    }
+    for (int i = 0; i < cartProducts.length; i++) {
+      print('9999999999999999999999');
+      if (cartProducts[i].id == product.id) {
+        // if (cartProducts[i].qty + quantity <=
+        //     cartProducts[i].inStock!.toInt()) {
+        product.countInCart = quantity;
+        // product.countInCart += quantity;
+        totalPrice = quantity * product.price.toInt();
+        // totalPrice += quantity * product.price.toInt();
+        var headers = {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        };
+        var request =
+            http.MultipartRequest('POST', Uri.parse('${Api.baseUrl}cart/add'));
+        request.fields.addAll({'id': '${product.id}', 'qty': '${quantity}'});
+
+        request.headers.addAll(headers);
+
+        http.StreamedResponse response = await request.send();
+        print(response.statusCode);
+        if (response.statusCode == 200) {
+          emit(CartAddSuccess());
+          print(await response.stream.bytesToString());
+        } else {
+          print(response.reasonPhrase);
+        }
+
+        // var response = await Api.request(
+        //     url: 'cart/add',
+        //     body: {
+        //       'id': product.id,
+        //       // cartProducts[i].id,
+        //       'qty': product.qty,
+        //       // cartProducts[i].qty,
+        //     },
+        //     token: User.token,
+        //     methodType: MethodType.post);
+        print("response.toString()");
+        print(response.toString());
+        // List<Product> favouriteProducts = Product.fromListJson(favouriteJsonData);
+        // var prod = ProductsListModel.fromJson(favouriteJsonData);
+        // emit(CartAddSuccess());
+        logger.i("Current cart products :$cartProducts");
+        // } else {
+        //   // throw Exception();
+        // }
+        return;
+      }
+
+      // Product do not exist: add it to list
+      if (quantity <= product.inStock!.toInt()) {
+        if (quantity <= product.qty) {
+          product.qty = quantity;
+          //   cartProducts.add(product);
+          totalPrice += (product.qty * product.price.toInt());
+          //   emit(CartAddSuccess());
+          //   logger.i("Current cart products :$cartProducts");
+        } else {
+          emit(CartAddFailure());
+          throw Exception();
         }
       }
-      // Product do not exist: add it to list
-      // if (quantity <= product.inStock) {
-      if (quantity <= product.qty) {
-        product.qty = quantity;
-        cartProducts.add(product);
-        totalPrice +=(product.qty * product.price.toInt());
-        emit(CartAddSuccess());
-        logger.i("Current cart products :$cartProducts");
-      } else {
-        throw Exception();
-      }
-    } catch (e) {
-      logger.e("Cart Cubit Add to Cart : \nAdd Failure ");
-      emit(CartAddFailure());
     }
+    // } catch (e) {
+    //   logger.e("Cart Cubit Add to Cart : \nAdd Failure ");
+    //   emit(CartAddFailure());
+    // }
   }
 
-  void increaseProductAmount({required ProductModel product}) {
+  Future<void> increaseProductAmount({required ProductModel product}) async {
+    String token = GetStorage().read('token') ?? "";
     for (int i = 0; i < cartProducts.length; i++) {
       if (cartProducts[i].id == product.id) {
         // if (cartProducts[i].qty + 1 <= cartProducts[i].inStock) {
-        if (cartProducts[i].qty + 1 <= cartProducts[i].qty) {
-          cartProducts[i].qty++;
-          totalPrice += product.price.toInt();
-          emit(CartProductsChange());
-          logger.i("Current cart products :$cartProducts");
-          return;
+        // if (cartProducts[i].qty + 1 <= cartProducts[i].qty) {
+        cartProducts[i].countInCart++;
+        totalPrice += product.price.toInt();
+        var headers = {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        };
+        var request = http.MultipartRequest(
+            'POST', Uri.parse('http://192.168.0.17:8000/api/cart/add'));
+        request.fields
+            .addAll({'id': '${product.id}', 'qty': '${product.countInCart}'});
+
+        request.headers.addAll(headers);
+
+        http.StreamedResponse response = await request.send();
+        print(response.statusCode);
+        if (response.statusCode == 200) {
+          emit(CartAddSuccess());
+          print(await response.stream.bytesToString());
+        } else {
+          print(response.reasonPhrase);
         }
+
+        emit(CartProductsChange());
+        logger.i("Current cart products :$cartProducts");
+        return;
       }
+      // }
     }
   }
 
-  void decreaseProductAmount({required ProductModel product}) {
+  Future<void> decreaseProductAmount({required ProductModel product}) async {
+    String token = GetStorage().read('token') ?? "";
     for (int i = 0; i < cartProducts.length; i++) {
       if (cartProducts[i].id == product.id) {
-        if (cartProducts[i].qty > 0) {
-          cartProducts[i].qty--;
-          if (cartProducts[i].qty == 0) {
+        if (cartProducts[i].countInCart > 0) {
+          cartProducts[i].countInCart--;
+          var headers = {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          };
+          var request = http.MultipartRequest(
+              'POST', Uri.parse('http://192.168.0.17:8000/api/cart/add'));
+          request.fields
+              .addAll({'id': '${product.id}', 'qty': '${product.countInCart}'});
+          request.headers.addAll(headers);
+
+          http.StreamedResponse response = await request.send();
+          print(response.statusCode);
+          if (response.statusCode == 200) {
+            emit(CartAddSuccess());
+            print(await response.stream.bytesToString());
+          } else {
+            print(response.reasonPhrase);
+          }
+
+          if (cartProducts[i].countInCart == 0) {
             cartProducts.removeAt(i);
           }
           totalPrice -= product.price.toInt();
@@ -83,7 +175,7 @@ class CartCubit extends Cubit<CartState> {
     try {
       emit(CartPurchaseLoading());
       //await Future.delayed(const Duration(seconds: 2));
-///todo to json cart
+      ///todo to json cart
 //       Api.request(
 //           url: 'api/carts',
 //           body: Product.toJsonCart(cartProducts),

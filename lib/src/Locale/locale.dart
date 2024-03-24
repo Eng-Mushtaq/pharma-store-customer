@@ -8,10 +8,11 @@ class AppLocale implements Translations {
           "welcomeMessage": "أهلاً بعودتك",
 
           // auth
-          "enterCredentials": "من فضلك أدخل بياناتك الائتمانية",
+          "enterCredentials": "من فضلك أدخل بيانات تسجيل الدخول",
           "signIn": "تسجيل الدخول",
-          "userNumber": "رقم المستخدم",
+          "userNumber": "رقم الهاتف ",
           "password": "كلمة المرور",
+          "email": "الايميل",
           "notAMember": " لست عضواً؟ ",
           "alreadyHaveAnAccount": "تملك حساباً مسبقاً؟ ",
           "register": "إنشاء حساب",
@@ -54,7 +55,7 @@ class AppLocale implements Translations {
           "WomenHealth": "صحة المرأة",
 
           // product details cards
-          "SP": "ل.س",
+          "SP": "ر.س",
           "brand": "الشركة المصنعة",
           "expiration": "تاريخ الانتهاء",
           "inStock": "في المخزن",
@@ -150,13 +151,15 @@ class AppLocale implements Translations {
           // auth
           "enterCredentials": "Please enter your credentials to Login",
           "signIn": "Sign in",
-          "userNumber": "User Number",
+          "userNumber": "Phone Number",
           "password": "Password",
           "alreadyHaveAnAccount": "Already have an account? ",
           "register": "Register",
           "notAMember": "Not a member? ",
           "signUp": "Sign up",
           "pharmacyName": "Pharmacy Name",
+          "email": "Email",
+
           "userName": "User Name",
           "confirmPassword": "Confirm Password",
           "fieldIsRequired": "Field is required",

@@ -33,7 +33,7 @@ Logger logger = Logger(printer: PrettyPrinter(printEmojis: false));
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FirebaseApi().initNotifications();
+  // await FirebaseApi().initNotifications();
   await GetStorage.init();
   get_lib.Get.put(AppLocalController());
   Bloc.observer = SimpleBlocObserver();

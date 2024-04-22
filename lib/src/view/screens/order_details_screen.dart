@@ -10,12 +10,15 @@ import 'package:pharmacy_warehouse_store_mobile/src/view/screens/navigation%20ba
 import 'package:pharmacy_warehouse_store_mobile/src/view/widgets/product_list_tile.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/view/widgets/show_image.dart';
 
+import '../../Cubits/Orders/orders_list_model.dart';
+
 class OrderDetailsScreen extends StatelessWidget {
-  const OrderDetailsScreen({super.key});
+  OrderModel order;
+   OrderDetailsScreen({super.key,required this.order});
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<OrdersCubit>(context).getOrder(id: Get.arguments as int);
+    // BlocProvider.of<OrdersCubit>(context).getOrder(id: Get.arguments as int);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -40,35 +43,62 @@ class OrderDetailsScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          if (state is OrderFetchSuccess) {
-            Order order = state.order;
-            // return _OrderProductsSuccessView(order: order);
-          } else if (state is OrdersFetchLoading) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
-              ),
-            );
-          } else if (state is OrderFetchFailure) {
-            return const Center(
-              child: ShowImage(
-                imagePath: AppImages.error,
-                height: 500,
-                width: 500,
-              ),
-            );
-          } else if (state is OrderNetworkFailure) {
-            return const Center(
-              child: ShowImage(
-                imagePath: AppImages.error404,
-                height: 500,
-                width: 500,
-              ),
-            );
-          }
-          return const Center(
-            child: CircularProgressIndicator(
-              color: AppColors.primaryColor,
+          // if (state is OrderFetchSuccess) {
+            // Order order = state.order;
+            return _OrderProductsSuccessView(order: order);
+          // }
+          //  if (state is OrdersFetchLoading) {
+          //   return const Center(
+          //     child: CircularProgressIndicator(
+          //       color: AppColors.primaryColor,
+          //     ),
+          //   );
+          // } else if (state is OrderFetchFailure) {
+          //   return const Center(
+          //     child: ShowImage(
+          //       imagePath: AppImages.error,
+          //       height: 500,
+          //       width: 500,
+          //     ),
+          //   );
+          // } else if (state is OrderNetworkFailure) {
+          //   return const Center(
+          //     child: ShowImage(
+          //       imagePath: AppImages.error404,
+          //       height: 500,
+          //       width: 500,
+          //     ),
+          //   );
+          // }
+          // return const Center(
+          //   child: CircularProgressIndicator(
+          //     color: AppColors.primaryColor,
+          //   ),
+          // );
+        },
+      ),
+    );
+  }
+}
+
+class _OrderProductsSuccessView extends StatelessWidget {
+  const _OrderProductsSuccessView({required this.order});
+  final OrderModel order;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8, right: 16, left: 16),
+      child: ListView.builder(
+        itemCount: order.details.length,
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        //physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12.0),
+            child: ProductListTile(
+              product: order.details[index].product,
+              quantity: order.details[index].quantity,
             ),
           );
         },
@@ -76,29 +106,3 @@ class OrderDetailsScreen extends StatelessWidget {
     );
   }
 }
-
-// class _OrderProductsSuccessView extends StatelessWidget {
-//   const _OrderProductsSuccessView({required this.order});
-//   final Order order;
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.only(top: 8, right: 16, left: 16),
-//       child: ListView.builder(
-//         itemCount: order.orderedProducts.length,
-//         scrollDirection: Axis.vertical,
-//         shrinkWrap: true,
-//         //physics: const NeverScrollableScrollPhysics(),
-//         itemBuilder: (context, index) {
-//           return Padding(
-//             padding: const EdgeInsets.only(bottom: 12.0),
-//             child: ProductListTile(
-//               product: order.orderedProducts[index].product,
-//               quantity: order.orderedProducts[index].orderedQuantity,
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }

@@ -7,7 +7,7 @@ final class OrdersInitial extends OrdersState {}
 final class OrdersFetchLoading extends OrdersState {}
 
 final class OrdersFetchSuccess extends OrdersState {
-  List<Order> orders;
+  List<OrderModel> orders;
   OrdersFetchSuccess({required this.orders});
 }
 

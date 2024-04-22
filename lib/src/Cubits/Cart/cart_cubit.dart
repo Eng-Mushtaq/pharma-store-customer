@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +11,7 @@ import 'package:pharmacy_warehouse_store_mobile/src/model/user.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/services/api.dart';
 
 import '../Products/products_cubit.dart';
+import 'check_out_model.dart';
 part 'cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
@@ -175,18 +178,45 @@ class CartCubit extends Cubit<CartState> {
     try {
       emit(CartPurchaseLoading());
       //await Future.delayed(const Duration(seconds: 2));
-      ///todo to json cart
+      String token = GetStorage().read('token') ?? "";
+      var headers = {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      var request = await http.get(
+        Uri.parse('${Api.baseUrl}cart/checkout'), headers: headers,);
+      // request.fields
+      //     .addAll({'id': '${product.id}', 'qty': '${product.countInCart}'});
+      // request.headers.addAll(headers);
+
+      // http.StreamedResponse response = await request.send();
+      print(request.statusCode);
+      print(request.body);
+      if (request.statusCode == 200) {
+        var data = jsonDecode(request.body);
+        var res = CheckOutModel.fromJson(data);
+        totalPrice = 0;
+        emit(CartPurchaseSuccess());
+        cartProducts.clear();
+        // if (orders.data.isEmpty) {
+        // emit(OrdersFetchEmpty());
+        // } else {
+        // emit(OrdersFetchSuccess(orders: orders.data));
+        // }
+        ///todo to json cart
 //       Api.request(
 //           url: 'api/carts',
 //           body: Product.toJsonCart(cartProducts),
 //           token: User.token,
 //           methodType: MethodType.post);
 
-      // logger.i(Product.toJsonCart(cartProducts));
-      totalPrice = 0;
-      emit(CartPurchaseSuccess());
-      cartProducts.clear();
-    } on DioException catch (e) {
+        // logger.i(Product.toJsonCart(cartProducts));
+        totalPrice = 0;
+        emit(CartPurchaseSuccess());
+        cartProducts.clear();
+      }
+    }
+      on DioException catch (e) {
       logger.e("Cart Cubit Purchase : \nNetwork Failure ");
       emit(CartNetworkFailure(errorMessage: e.message.toString()));
     } catch (e) {

@@ -154,11 +154,11 @@ class ProductModel {
   ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    name_2 = null;
-    image = null;
+    name_2 = json['name'];
+    image = json['image'];
     categoryId = json['category_id'];
     qty = json['qty'] ?? 0;
-    expDate = null;
+    expDate = json['exp_date'];
     price = num.parse(json['price']);
     discount = json['discount'];
     description = json['description'];

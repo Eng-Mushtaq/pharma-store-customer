@@ -8,6 +8,8 @@ import 'package:pharmacy_warehouse_store_mobile/src/view/helpers/show_snack_bar.
 import 'package:pharmacy_warehouse_store_mobile/src/view/widgets/order_card.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/view/widgets/show_image.dart';
 
+import '../../../Cubits/Orders/orders_list_model.dart';
+
 class OrdersScreen extends StatelessWidget {
   const OrdersScreen({super.key});
 
@@ -25,8 +27,8 @@ class OrdersScreen extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is OrdersFetchSuccess) {
-            List<Order> orders = state.orders;
-            return _OrdersSuccessView(orders: orders);
+            // List<OrderModel> orders = state.orders;
+            return _OrdersSuccessView(orders: state.orders);
           } else if (state is OrdersFetchLoading) {
             return const Center(
               child: CircularProgressIndicator(
@@ -71,7 +73,7 @@ class OrdersScreen extends StatelessWidget {
 
 class _OrdersSuccessView extends StatelessWidget {
   const _OrdersSuccessView({required this.orders});
-  final List<Order> orders;
+  final List<OrderModel> orders;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

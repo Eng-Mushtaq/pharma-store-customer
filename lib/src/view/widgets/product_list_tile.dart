@@ -42,7 +42,7 @@ class ProductListTile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Container(
-                    width: 100,
+                    width: 90,
                     height: 100,
                     child: CachedNetworkImage(
                       fit: BoxFit.cover,

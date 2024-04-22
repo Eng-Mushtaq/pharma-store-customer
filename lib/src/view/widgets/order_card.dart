@@ -6,16 +6,18 @@ import 'package:pharmacy_warehouse_store_mobile/src/model/order.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/view/screens/order_details_screen.dart';
 import 'package:pharmacy_warehouse_store_mobile/src/view/widgets/show_image.dart';
 
+import '../../Cubits/Orders/orders_list_model.dart';
+
 class OrderCard extends StatelessWidget {
   const OrderCard({super.key, required this.order});
-  final Order order;
+  final OrderModel order;
 
   @override
   Widget build(BuildContext context) {
     var theme = context.theme;
     return GestureDetector(
       onTap: () {
-        Get.off(() => const OrderDetailsScreen(), arguments: order.id);
+        Get.off(() =>  OrderDetailsScreen(order: order));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -71,7 +73,7 @@ class OrderCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  "#${order.id}",
+                  "#${order.id.toString()}",
                   style: theme.textTheme.titleLarge,
                 ),
                 const SizedBox(
@@ -80,7 +82,7 @@ class OrderCard extends StatelessWidget {
                 SizedBox(
                   width: 140,
                   child: AutoSizeText(
-                    "${order.bill} ${"SP".tr}",
+                    "${order.totalPrice} ${"SP".tr}",
                     style: theme.textTheme.titleLarge,
                     textAlign: TextAlign.end,
                     maxLines: 1,
@@ -96,7 +98,7 @@ class OrderCard extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  order.date,
+                  order.createdAt,
                   style: theme.textTheme.titleLarge,
                 ),
               ],

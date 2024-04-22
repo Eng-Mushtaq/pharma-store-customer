@@ -24,6 +24,6 @@ class AppPages {
     ),
     GetPage(name: Routes.PROFILE, page: () => const ProfileScreen()),
     GetPage(name: Routes.STATISTICS, page: () => const StatisticsScreen()),
-    GetPage(name: Routes.ORDER_DETAILS, page: () => const OrderDetailsScreen()),
+    // GetPage(name: Routes.ORDER_DETAILS, page: () =>  OrderDetailsScreen()),
   ];
 }

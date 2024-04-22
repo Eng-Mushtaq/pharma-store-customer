@@ -94,14 +94,14 @@ class _SearchBar extends StatelessWidget {
       },
       onSubmit: (value) {
         BlocProvider.of<BottomNavBarCubit>(context).navigate(index: 1);
-        BlocProvider.of<ProductsCubit>(context).search();
+        BlocProvider.of<ProductsCubit>(context).search(0);
       },
       validator: null,
       keyboardType: TextInputType.text,
       prefixIcon: Icons.search,
       onTap: () {
         BlocProvider.of<BottomNavBarCubit>(context).navigate(index: 1);
-        BlocProvider.of<ProductsCubit>(context).search();
+        BlocProvider.of<ProductsCubit>(context).search(0);
       },
       isSearchBar: true,
     );
@@ -238,8 +238,8 @@ class _CategoriesCardsViewSuccess extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             BlocProvider.of<BottomNavBarCubit>(context).navigate(index: 1);
-            // BlocProvider.of<ProductsCubit>(context).choosenCategory =
-            //     categories[index];
+            BlocProvider.of<ProductsCubit>(context).choosenCategory = categories[index];
+            BlocProvider.of<ProductsCubit>(context).search(categories[index].id);
           },
           child: Container(
             margin: const EdgeInsets.only(right: 8),

@@ -21,10 +21,10 @@ class SearchConstraints {
 class ProductsCubit extends Cubit<ProductsState> {
   ProductsCubit() : super(ProductsInitial());
   String searchBarContent = "";
-  // Category choosenCategory = Category(id: 0, name: "All".tr);
+  Category choosenCategory = Category(id: 0, name: "All".tr);
   String searchByConstraints = SearchConstraints.name;
 
-  Future<void> search() async {
+  Future<void> search(int? category) async {
     // logger.i(
     //     "Product Cubit Search : \nChooosen category name : ${choosenCategory.name} \nSearch bar content : $searchBarContent \nSearch By constraints : $searchByConstraints");
     try {
@@ -46,8 +46,11 @@ class ProductsCubit extends Cubit<ProductsState> {
       // }
 
       // Fetch Searched Products from API
+      String url='products';
+      print("choosenCategory.name");
+      print(choosenCategory.name);
       Map<String, dynamic> productsJsonData = await Api.request(
-          url: 'products',
+          url: 'products?cat_id=${category}',
           body: null,
           token: User.token,
           methodType: MethodType.get) as Map<String, dynamic>;

@@ -16,7 +16,7 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<CategoryCubit>(context).getCategories();
-    BlocProvider.of<ProductsCubit>(context).search();
+    BlocProvider.of<ProductsCubit>(context).search(0);
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -45,13 +45,13 @@ class SearchScreen extends StatelessWidget {
                             .searchBarContent = value;
                       },
                       onSubmit: (value) {
-                        BlocProvider.of<ProductsCubit>(context).search();
+                        BlocProvider.of<ProductsCubit>(context).search(0);
                       },
                       validator: null,
                       keyboardType: TextInputType.text,
                       prefixIcon: Icons.search,
                       onTap: () {
-                        BlocProvider.of<ProductsCubit>(context).search();
+                        BlocProvider.of<ProductsCubit>(context).search(0);
                       },
                       isSearchBar: true,
                     ),
@@ -202,7 +202,7 @@ class _CategoriesCardsViewState extends State<_CategoriesCardsView> {
                         selectedIndex = index;
                         // BlocProvider.of<ProductsCubit>(context)
                         //     .choosenCategory = categories[selectedIndex];
-                        BlocProvider.of<ProductsCubit>(context).search();
+                        BlocProvider.of<ProductsCubit>(context).search(categories[selectedIndex].id);
                       },
                     );
                   },
